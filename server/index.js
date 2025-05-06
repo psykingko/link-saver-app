@@ -9,6 +9,7 @@ import bookmarkRoutes from "./routes/bookmarkRoutes.js"; // Import bookmark rout
 
 dotenv.config();
 const app = express();
+const allowedOrigins = ["http://localhost:5173", "http://13.201.18.99"];
 
 // Connect to MongoDB
 connectDB();
@@ -16,8 +17,14 @@ connectDB();
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend URL
-    credentials: true, // Ensure credentials (cookies) are sent
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
   })
 );
 
