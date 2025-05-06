@@ -40,6 +40,11 @@ const BookmarkViewer = () => {
   }, [location]);
 
   const handleDelete = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this bookmark?"
+    );
+    if (!confirmed) return;
+
     try {
       await axios.delete(`${BASE_URL}/api/bookmarks/${id}`, {
         headers: {

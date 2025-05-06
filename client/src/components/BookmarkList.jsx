@@ -38,7 +38,12 @@ const BookmarkList = ({ bookmarks, deleteBookmark }) => {
                 </p>
               </a>
               <button
-                onClick={() => deleteBookmark(bookmark._id)}
+                onClick={() => {
+                  const confirmed = window.confirm(
+                    "Are you sure you want to delete this bookmark?"
+                  );
+                  if (confirmed) deleteBookmark(bookmark._id);
+                }}
                 className="mt-4 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
               >
                 Delete
