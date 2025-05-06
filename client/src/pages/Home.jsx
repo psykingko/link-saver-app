@@ -2,13 +2,43 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import BookmarkList from "../components/BookmarkList";
+import { MoonLoader } from "react-spinners";
 
 const BASE_URL = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 
 const Home = () => {
   const navigate = useNavigate();
   const [bookmarks, setBookmarks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
+
+  const fetchBookmarks = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get(`${BASE_URL}/api/bookmarks`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setBookmarks(res.data.bookmarks);
+        })
+        .catch((err) => console.error("Failed to fetch bookmarks:", err))
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
+      console.log("Token is missing");
+    }
+  };
+
+  useEffect(() => {
+    fetchBookmarks();
+  }, []);
+
+  useEffect(() => {
+    fetchBookmarks();
+  }, [location]);
 
   const handleAddBookmark = () => {
     if (localStorage.getItem("token")) {
@@ -23,42 +53,6 @@ const Home = () => {
     navigate("/login");
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      axios
-        .get(`${BASE_URL}/api/bookmarks`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => setBookmarks(res.data.bookmarks))
-        .catch((err) => console.error("Failed to fetch bookmarks:", err));
-    } else {
-      console.log("Token is missing");
-    }
-  }, []); // Only run on component mount
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      axios
-        .get(`${BASE_URL}/api/bookmarks`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setBookmarks(res.data.bookmarks);
-          console.log("API Response:", res.data);
-        })
-
-        .catch((err) => console.error("Failed to fetch bookmarks:", err));
-    }
-  }, [location]); // Refetch when location (route) changes
-
   const deleteBookmark = (id) => {
     axios
       .delete(`${BASE_URL}/api/bookmarks/${id}`, {
@@ -67,9 +61,7 @@ const Home = () => {
         },
       })
       .then(() => {
-        setBookmarks((prevBookmarks) =>
-          prevBookmarks.filter((b) => b._id !== id)
-        );
+        setBookmarks((prev) => prev.filter((b) => b._id !== id));
         console.log("Bookmark deleted successfully");
       })
       .catch((err) => console.error("Error deleting bookmark:", err));
@@ -97,8 +89,16 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Pass bookmarks and deleteBookmark to BookmarkList */}
-      <BookmarkList bookmarks={bookmarks} deleteBookmark={deleteBookmark} />
+      {/* Loader */}
+      {loading ? (
+        <div className="flex justify-center mt-4">
+          <MoonLoader color="#4B6A84" size={50} />
+        </div>
+      ) : bookmarks.length === 0 ? (
+        <p className="text-center text-gray-600">No bookmarks yet.</p>
+      ) : (
+        <BookmarkList bookmarks={bookmarks} deleteBookmark={deleteBookmark} />
+      )}
     </div>
   );
 };
