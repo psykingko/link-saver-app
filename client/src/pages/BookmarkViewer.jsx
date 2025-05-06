@@ -13,6 +13,8 @@ const BookmarkViewer = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
     const fetchBookmarks = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/bookmarks`, {
@@ -22,7 +24,7 @@ const BookmarkViewer = () => {
         });
         setBookmarks(response.data.bookmarks || []);
       } catch (err) {
-        console.error(err);
+        console.error("Failed to fetch bookmarks:", err);
         setError("Failed to fetch bookmarks");
       } finally {
         setLoading(false);
@@ -35,22 +37,7 @@ const BookmarkViewer = () => {
       setLoading(false);
       setError("User not logged in");
     }
-  }, [token]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      axios
-        .get("http://localhost:5000/api/bookmarks", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => setBookmarks(res.data.bookmarks))
-        .catch((err) => console.error("Failed to fetch bookmarks:", err));
-    }
-  }, [location]); // Refetch when location (route) changes
+  }, [location]);
 
   const handleDelete = async (id) => {
     try {

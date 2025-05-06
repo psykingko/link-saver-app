@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import BookmarkList from "../components/BookmarkList";
 
+const BASE_URL = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+
 const Home = () => {
   const navigate = useNavigate();
   const [bookmarks, setBookmarks] = useState([]);
@@ -26,7 +28,7 @@ const Home = () => {
 
     if (token) {
       axios
-        .get("http://localhost:5000/api/bookmarks", {
+        .get(`${BASE_URL}/api/bookmarks`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -43,7 +45,7 @@ const Home = () => {
 
     if (token) {
       axios
-        .get("http://localhost:5000/api/bookmarks", {
+        .get(`${BASE_URL}/api/bookmarks`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -59,7 +61,7 @@ const Home = () => {
 
   const deleteBookmark = (id) => {
     axios
-      .delete(`http://localhost:5000/api/bookmarks/${id}`, {
+      .delete(`${BASE_URL}/api/bookmarks/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -68,6 +70,7 @@ const Home = () => {
         setBookmarks((prevBookmarks) =>
           prevBookmarks.filter((b) => b._id !== id)
         );
+        console.log("Bookmark deleted successfully");
       })
       .catch((err) => console.error("Error deleting bookmark:", err));
   };
