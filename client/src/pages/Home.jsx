@@ -68,21 +68,21 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 bg-brand-lightBg dark:bg-brand-darkBg min-h-screen transition-colors duration-300">
       <div className="text-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
           Welcome to Link Saver!
         </h1>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={handleAddBookmark}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition"
           >
             Add Bookmark
           </button>
           <button
             onClick={handleLogout}
-            className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg"
+            className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition"
           >
             Logout
           </button>
@@ -95,7 +95,9 @@ const Home = () => {
           <MoonLoader color="#4B6A84" size={50} />
         </div>
       ) : bookmarks.length === 0 ? (
-        <p className="text-center text-gray-600">No bookmarks yet.</p>
+        <p className="text-center text-gray-600 dark:text-gray-300">
+          No bookmarks yet.
+        </p>
       ) : (
         <BookmarkList bookmarks={bookmarks} deleteBookmark={deleteBookmark} />
       )}

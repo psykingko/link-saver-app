@@ -4,15 +4,19 @@ import axios from "axios";
 const BookmarkList = ({ bookmarks, deleteBookmark }) => {
   return (
     <div className="mt-10">
-      <h2 className="text-2xl font-bold text-gray-700 mb-6">Your Bookmarks</h2>
+      <h2 className="text-2xl font-bold text-gray-700 dark:text-white mb-6">
+        Your Bookmarks
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {bookmarks.length === 0 ? (
-          <p className="text-center text-gray-600">No bookmarks yet.</p>
+          <p className="text-center text-gray-600 dark:text-gray-300">
+            No bookmarks yet.
+          </p>
         ) : (
           bookmarks.map((bookmark) => (
             <div
               key={bookmark._id}
-              className="bg-white border border-gray-200 rounded-xl shadow-md p-5 flex flex-col hover:shadow-xl transition-shadow"
+              className="bg-white dark:bg-brand-darkCard border border-gray-200 dark:border-gray-700 rounded-xl shadow-md p-5 flex flex-col hover:shadow-xl transition-shadow"
             >
               <a
                 href={bookmark.url}
@@ -29,11 +33,11 @@ const BookmarkList = ({ bookmarks, deleteBookmark }) => {
                       e.target.src = "/default-favicon.png";
                     }}
                   />
-                  <h3 className="text-lg font-semibold text-gray-800 truncate">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
                     {bookmark.title}
                   </h3>
                 </div>
-                <p className="text-sm text-gray-600 line-clamp-4">
+                <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-4">
                   {bookmark.summary}
                 </p>
               </a>
