@@ -31,12 +31,12 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
         <div className="flex items-center space-x-4">
           {/* Theme Toggle Slider */}
           <button
-            onClick={toggleDarkMode} // Toggle dark mode when clicked
+            onClick={toggleDarkMode}
             className="relative inline-flex items-center cursor-pointer"
             aria-label="Toggle Dark Mode"
           >
             <div
-              className={`w-14 h-8 flex items-center bg-gray-300 dark:bg-gray-700 rounded-full p-1 cursor-pointer`}
+              className={`w-14 h-8 flex items-center bg-gray-300 dark:bg-gray-700 rounded-full p-1`}
             >
               <div
                 className={`w-6 h-6 bg-white rounded-full shadow-md transform duration-300 ease-in-out ${
@@ -46,32 +46,37 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
             </div>
           </button>
 
+          <span className="h-6 w-px bg-gray-400 dark:bg-gray-500 mx-2"></span>
+
           {isAuthenticated() ? (
             <>
               {location.pathname === "/bookmarks" ? (
                 <Link
                   to="/add"
-                  className="text-white  hover:text-brand-lightAccent2 dark:hover:text-brand-darkAccent2 transition"
+                  className="text-white hover:text-brand-lightAccent2 dark:hover:text-brand-darkAccent2 transition"
                 >
                   Add Bookmark
                 </Link>
               ) : (
                 <Link
                   to="/bookmarks"
-                  className="text-white  hover:text-brand-lightAccent2 dark:hover:text-brand-darkAccent2 transition"
+                  className="text-white hover:text-brand-lightAccent2 dark:hover:text-brand-darkAccent2 transition"
                 >
                   View Bookmarks
                 </Link>
               )}
+
+              <span className="h-6 w-px bg-gray-400 dark:bg-gray-500 mx-2"></span>
+
               <button
                 onClick={handleLogout}
-                className="text-brand-lightText  hover:text-brand-lightAccent2 dark:hover:text-brand-darkAccent2 transition"
+                className="text-brand-lightText hover:text-brand-lightAccent2 dark:hover:text-brand-darkAccent2 transition"
               >
                 Logout
               </button>
             </>
           ) : (
-            <div className="flex space-x-4">
+            <>
               {location.pathname !== "/login" && (
                 <Link
                   to="/login"
@@ -80,6 +85,9 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
                   Login
                 </Link>
               )}
+
+              <span className="h-6 w-px bg-gray-400 dark:bg-gray-500 mx-2"></span>
+
               {location.pathname !== "/register" && (
                 <Link
                   to="/register"
@@ -88,7 +96,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
                   Register
                 </Link>
               )}
-            </div>
+            </>
           )}
         </div>
       </div>

@@ -13,7 +13,7 @@ export default {
           lightText: "#FFFFFF",
 
           darkBg: "#03045E",
-          darkCard: "#0077B6",
+          darkCard: "#023E8A",
           darkAccent: "#00B4D8",
           darkAccent2: "#90E0EF",
           darkText: "#000000",
