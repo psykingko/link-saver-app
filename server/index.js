@@ -9,7 +9,11 @@ import bookmarkRoutes from "./routes/bookmarkRoutes.js"; // Import bookmark rout
 
 dotenv.config();
 const app = express();
-const allowedOrigins = ["http://localhost:5173", "http://13.201.18.99"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://13.201.18.99",
+  "https://link-saver-app.onrender.com/",
+];
 
 // Connect to MongoDB
 connectDB();
