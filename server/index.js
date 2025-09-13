@@ -12,7 +12,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "http://13.201.18.99",
-  "https://link-saver-app.onrender.com/",
+  "https://link-saver-app-indol.vercel.app/",
 ];
 
 // Connect to MongoDB
