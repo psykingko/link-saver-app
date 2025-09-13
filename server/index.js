@@ -13,6 +13,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://13.201.18.99",
   "https://link-saver-app-indol.vercel.app/",
+  "https://link-saver-kc4cya95j-ashishs-projects-b27772ae.vercel.app/",
 ];
 
 // Connect to MongoDB
